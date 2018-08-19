@@ -1,36 +1,31 @@
-
 from pathlib import Path
 import json
 
-_PROG_NAME = "expensemanager"
+_DEFAULT_PROG_NAME = "expensemanager"
 
-_CONFIG_DIR = Path.home() / ("." + _PROG_NAME)
+_DEFAULT_CONFIG_DIR = Path.home() / ("." + _DEFAULT_PROG_NAME)
 
-_CONFIG_FILE = _CONFIG_DIR / "config.json"
+_DEFAULT_CONFIG_FILE = _DEFAULT_CONFIG_DIR / "config.json"
 
-_STORAGE_LOCATION = "file_system"
-
-_STORAGE_TYPE = "json"
-
-_DATA_LOCATION = _CONFIG_DIR / "data"
+_DEFAULT_DATA_DRIVER = "json"
 
 _config = {
-    "prog_name": _PROG_NAME,
-    "config_dir": _CONFIG_DIR,
-    "config_file": _CONFIG_FILE,
-    "storage_location": _STORAGE_LOCATION,
-    "storage_type": _STORAGE_TYPE,
-    "data_location": _DATA_LOCATION
+    "prog_name": _DEFAULT_PROG_NAME,
+    "config_dir": _DEFAULT_CONFIG_DIR,
+    "config_file": _DEFAULT_CONFIG_FILE,
+    "data_driver": _DEFAULT_DATA_DRIVER,
+    "json": {
+        "indent": 2,
+        "data_dir": _DEFAULT_CONFIG_DIR / "data" 
+    }
 }
-
-
 
 try:
     with _config["config_file"].open() as f:
         props_from_file = json.load(f)
     _config.update(props_from_file)
 except Exception as e:
-    SystemExit("Error reading from config file({}): {}".format(str(_config["config_file"]), e))
+    SystemExit("Error in reading config file({}): {}".format(str(_config["config_file"]), e))
 
 
 Config = type("Config", (object,), _config)
