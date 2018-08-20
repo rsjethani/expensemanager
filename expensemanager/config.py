@@ -15,6 +15,7 @@ _config = {
     "config_file": _DEFAULT_CONFIG_FILE,
     "data_driver": _DEFAULT_DATA_DRIVER,
     "json": {
+        "version": "0.0.1",
         "indent": 2,
         "data_dir": _DEFAULT_CONFIG_DIR / "data" 
     }
